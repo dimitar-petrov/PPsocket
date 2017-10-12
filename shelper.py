@@ -2,25 +2,26 @@ import socket
 
 class SocketHelper:
 
-	s = None
-	conn = None
-	addr = None
+    s = None
+    conn = None
+    addr = None
 
-	def __init__(self,host,port):
-		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.s.bind((host, port))
-		self.s.listen(5)
+    def __init__(self,host,port):
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.bind((host, port))
+        self.s.listen(5)
 
-	def s_appept(self):
-		self.conn,self.addr = self.s.accept()
+    def s_appept(self):
+       self.conn,self.addr = self.s.accept()
 
-	def send_data(self,content):
-		self.conn.send(content)
+    def send_data(self,content):
+       self.conn.send(content)
 
-	def read_data(self):
-		buf = self.conn.recv(1024)
-		return buf
+    def read_data(self):
+        count = int(self.conn.recv(6))
+        buf = self.conn.recv(count-100000)
+        return buf
 
-	def close_socket(self):
+    def close_socket(self):
 		self.conn.close()
 

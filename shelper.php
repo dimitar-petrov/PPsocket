@@ -10,6 +10,7 @@ class SocketHelper{
    }
 
    public function send_data($content){
+       socket_write($this->socket, 100000 + strlen($content), 6);
        socket_write($this->socket,$content,strlen($content));
    }
 
