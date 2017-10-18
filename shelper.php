@@ -1,6 +1,6 @@
 <?php
 
-class SocketHelper{
+class SockClient{
    
    public $socket;
 
@@ -18,3 +18,6 @@ class SocketHelper{
    	   socket_close($this->socket);
    }
 }
+
+// class SockServer{
+// }
