@@ -1,6 +1,10 @@
 import socket
 import select
 import os
+import logging
+
+logger = logging.getLogger('ppsocket.shelper')
+
 
 class SockServer:
 
@@ -23,12 +27,20 @@ class SockServer:
 
         ready = select.select([self.s], [], [], self.timeout)
         if ready[0]:
-            size = int(self.s.recv(6))
+            data = self.s.recv(6)
+            logger.debug('Bytes: %s', data)
+            try:
+                size = int(data)
+            except ValueError as excinfo:
+                logger.error('Exception: %s', excinfo)
+
             buf = self.s.recv(size - 100000)
+            logger.debug('Data: %s', buf)
             return buf
 
     def close_socket(self):
         self.s.close()
+
 
 class SockClient:
     s = None
